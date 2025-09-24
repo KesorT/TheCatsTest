@@ -5,10 +5,12 @@ class UserApiClient(BaseApiClient):
     def __init__(self):
         super().__init__()
 
+#Categories
     def get_categories(self):
         endpoint = "categories"
         return self.get(endpoint)
-    
+
+#Votes
     def get_votes(self):
         endpoint = "votes"
         return self.get(endpoint)
@@ -24,7 +26,8 @@ class UserApiClient(BaseApiClient):
     def delete_vote(self, vote_id):
         endpoint = f"votes/{vote_id}"
         return self.delete(endpoint)
-    
+
+#Favourites    
     def get_favorites(self):
         endpoint = "favourites"
         return self.get(endpoint)

@@ -17,16 +17,16 @@ class BaseApiClient:
     def get(self, endpoint, params=None):
         url = f"{self.base_url}{endpoint}"
         response = requests.get(url, headers=self.headers, params=params)
-        return response.json()
+        return response
 
     def post(self, endpoint, data=None):
         url = f"{self.base_url}{endpoint}"
         response = requests.post(url, headers=self.headers, json=data)
-        return response.json()
+        return response
     
     def delete(self, endpoint):
         url = f"{self.base_url}{endpoint}"
         response = requests.delete(url, headers=self.headers)
-        return response.status_code
+        return response
 
 
