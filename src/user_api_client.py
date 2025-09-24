@@ -1,4 +1,4 @@
-from base_api_client import BaseApiClient
+from .base_api_client import BaseApiClient
 
 
 class UserApiClient(BaseApiClient):
