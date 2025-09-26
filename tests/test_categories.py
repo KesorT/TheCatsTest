@@ -1,17 +1,6 @@
 import os
 import requests
 from jsonschema import validate
-import pytest
-
-
-CATEGORY_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "id": {"type": "integer"},
-        "name": {"type": "string"}
-    },
-    "required": ["id", "name"]
-}
 
 
 def test_get_categories(user_client):
@@ -30,4 +19,4 @@ def test_categories_schema(user_client):
 
     data = response.json()
     for category in data:
-        validate(instance=category, schema=CATEGORY_SCHEMA)
+        validate(instance=category, schema=user_client.load_schema("get_category_response.json"))

@@ -1,3 +1,4 @@
+from pathlib import Path
 from .base_api_client import BaseApiClient
 
 
@@ -54,3 +55,12 @@ class UserApiClient(BaseApiClient):
         endpoint = f"images/{image_id}"
         return self.delete(endpoint)
     
+#Schemas
+
+    def load_schema(self, schema_name):
+        import os
+        import json
+        schema_path = Path(__file__).parent.parent / "schemas" / schema_name
+        with open(schema_path, 'r') as file:
+            schema = json.load(file)
+        return schema

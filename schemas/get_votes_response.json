@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {"type": "integer"},
+        "image_id": {"type": "string"},
+        "sub_id": {"type": ["string", "null"]},
+        "created_at": {"type": "string", "format": "date-time"},
+        "value": {"type": "integer"},
+        "country_code": {"type": ["string", "null"]},
+        "image": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "url": {"type": "string", "format": "uri"},
+                "width": {"type": "integer"},
+                "height": {"type": "integer"}
+            }
+            
+        }
+    },
+    "required": ["id", "image_id", "created_at", "value", "image"]
+}

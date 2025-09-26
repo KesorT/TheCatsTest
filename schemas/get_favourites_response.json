@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {"type": "integer"},
+        "user_id": {"type": "string"},
+        "image_id": {"type": "string"},
+        "sub_id": {"type": ["string", "null"]},
+        "created_at": {"type": "string", "format": "date-time"},
+        "image": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "url": {"type": "string", "format": "uri"},
+                "width": {"type": "integer"},
+                "height": {"type": "integer"}
+            }
+            
+        }
+    },
+    "required": ["id", "user_id", "image_id", "created_at", "image"]
+}
