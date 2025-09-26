@@ -19,9 +19,9 @@ class BaseApiClient:
         response = requests.get(url, headers=self.headers, params=params)
         return response
 
-    def post(self, endpoint, data=None):
+    def post(self, endpoint, data=None, files=None):
         url = f"{self.base_url}{endpoint}"
-        response = requests.post(url, headers=self.headers, json=data)
+        response = requests.post(url, headers=self.headers, json=data, files=files)
         return response
     
     def delete(self, endpoint):

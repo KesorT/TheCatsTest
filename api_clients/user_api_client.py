@@ -44,4 +44,13 @@ class UserApiClient(BaseApiClient):
         endpoint = f"favourites/{favourite_id}"
         return self.delete(endpoint)
     
+#Images
+
+    def post_upload_image(self, data=None, files=None):
+        endpoint = "images/upload"
+        return self.post(endpoint, data=data, files=files)
+    
+    def delete_image(self, image_id):
+        endpoint = f"images/{image_id}"
+        return self.delete(endpoint)
     
