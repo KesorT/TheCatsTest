@@ -34,7 +34,7 @@ jobs:
         continue-on-error: true
 
       - name: Generate and Publish Allure Report
-        uses: allure-framework/allure2@v2.35.0
+        uses: allure-framework/allure2@v2.35.1
         with:
           allure-results-dir: allure-results
           github-token: ${{ secrets.GITHUB_TOKEN }}
