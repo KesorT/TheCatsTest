@@ -31,7 +31,7 @@ def test_get_votes_by_id(user_client, vote_testdata):
             ("a", [400], "Invalid non-integer vote value"),
         ]
 )
-def test_post_vote(user_client,  image_testdata, vote_value, expected_status, **kwargs):
+def test_post_vote(user_client,  image_testdata, vote_value, expected_status, comment):
     vote_data = {
         "image_id": image_testdata["id"],
         "value": vote_value
