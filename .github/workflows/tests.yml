@@ -28,25 +28,11 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Set up Allure
-        uses: allure-framework/setup-allurectl@v1
-        with:
-          allure-version: "2.29.0" 
-        
-      - name: 🧐 Debug Allure Installation
-        run: |
-          echo "--- 1. Printing PATH variable ---"
-          echo $PATH
-          echo "--- 2. Trying to find allure executable ---"
-          which allure || echo "Command 'which allure' failed"
-          echo "--- 3. Listing contents of where allure should be ---"
-          ls -la /opt/hostedtoolcache/allure || echo "Allure tool cache directory not found"
-
+      - name: Set up Allure Commandline
+        uses: simple-elf/setup-allure-commandline@v1
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
       
       - name: Run Pytest
         env:
