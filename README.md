@@ -51,5 +51,5 @@ Test Execution: It securely injects the BASE_URL and API_KEY from GitHub Secrets
 Report Generation & Publishing: After the tests run, it automatically generates the Allure report and deploys it to GitHub Pages.
 
 ## The latest test report for the main branch is always available at the following URL:
-https://kesort.github.io/thecatstest/
+https://kesort.github.io/TheCatsTest/
 
