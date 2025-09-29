@@ -32,6 +32,16 @@ jobs:
         uses: allure-framework/setup-allurectl@v1
         with:
           allure-version: "2.29.0" 
+        
+      - name: 🧐 Debug Allure Installation
+        run: |
+          echo "--- 1. Printing PATH variable ---"
+          echo $PATH
+          echo "--- 2. Trying to find allure executable ---"
+          which allure || echo "Command 'which allure' failed"
+          echo "--- 3. Listing contents of where allure should be ---"
+          ls -la /opt/hostedtoolcache/allure || echo "Allure tool cache directory not found"
+
 
       - name: Install dependencies
         run: |
