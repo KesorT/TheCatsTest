@@ -23,6 +23,9 @@ def image_id(user_client):
     else:
         pytest.fail("API call to 'images/search' returned no images.")
 
+    print(f"\nCleaning up image with ID: {image_data[0]['id']}")
+    user_client.delete_image(image_id=image_data[0]['id'])
+
 @pytest.fixture()
 def vote_id(user_client, image_id):
     vote_data = {
@@ -34,6 +37,9 @@ def vote_id(user_client, image_id):
     
     yield vote_data
 
+    print(f"\nCleaning up vote with ID: {vote_data['id']}")
+    user_client.delete_vote(vote_id=vote_data['id'])
+
 @pytest.fixture()
 def favourite_id(user_client, image_id):
     favourite_data = {
@@ -43,5 +49,8 @@ def favourite_id(user_client, image_id):
     favourite_data = response.json()
     
     yield favourite_data
+
+    print(f"\nCleaning up favourite with ID: {favourite_data['id']}")
+    user_client.delete_favourite(favourite_id=favourite_data['id'])
 
 
