@@ -3,42 +3,30 @@ import pytest
 import time
 
 def test_get_favourites(user_client):
-    response = user_client.get_favorites()
-    assert response.status_code == 200, f"Unexpected status code: {response.status_code}"
-
-    data = response.json()
-    assert isinstance(data, list), "Response must be a list"
-    assert len(data) > 0, "Favourites list should not be empty"
+    get_favourites_response = user_client.get_favorites()
+    assert isinstance(get_favourites_response, list), "Response must be a list"
+    assert len(get_favourites_response) > 0, "Favourites list should not be empty"
 
 def test_favourites_schema(user_client):
     time.sleep(1)  # To avoid hitting rate limits
-    response = user_client.get_favorites()
-    assert response.status_code == 200
+    get_favourites_response = user_client.get_favorites()
 
-    data = response.json()
-    for favourite in data:
+    for favourite in get_favourites_response:
         validate(instance=favourite, schema=user_client.load_schema("get_favourites_response.json"))
 
-def test_get_favourites_by_id(user_client, favourite_id):
-    response = user_client.get_favourites_by_id(favourite_id["id"])
-    assert response.status_code == 200, f"Unexpected status code: {response.status_code}"
-
-    data = response.json()
-    assert data["id"] == favourite_id["id"], "Favourite ID does not match"
+def test_get_favourites_by_id(user_client, favourite_testdata):
+    get_favourites_by_id_response = user_client.get_favourites_by_id(favourite_testdata["id"])
+    assert get_favourites_by_id_response["id"] == favourite_testdata["id"], "Favourite ID does not match"
 
 
-def test_post_favourite(user_client, image_id):
+def test_post_favourite(user_client, image_testdata):
     favourite_data = {
-        "image_id": image_id["id"]
+        "image_id": image_testdata["id"]
     }
-    response = user_client.post_favourites(favourite_data)
-    assert response.status_code in [200, 201], f"Unexpected status code: {response.status_code}"
+    post_favourite_response = user_client.post_favourites(favourite_data)
+    assert post_favourite_response["image_id"] == image_testdata["id"], "Image ID does not match"
 
-    data = response.json()
-    assert data["image_id"] == image_id["id"], "Image ID does not match"
-
-def test_delete_favourite(user_client, favourite_id):
-    response = user_client.delete_favourites(favourite_id["id"])
-    assert response.status_code == 200, f"Unexpected status code : {response.status_code}"
+def test_delete_favourite(user_client, favourite_testdata):
+    delete_favourite_response = user_client.delete_favourites(favourite_testdata["id"])
 
 

@@ -4,30 +4,19 @@ from jsonschema import validate
 import pytest
 
 
-def test_get_votes(user_client, vote_id):
-    response = user_client.get_votes()
-    assert response.status_code == 200, f"Unexpected status code: {response.status_code}"
-
-    data = response.json()
-    assert isinstance(data, list), "Response must be a list"
-    assert len(data) > 0, "Votes list should not be empty"
-
-    user_client.delete_vote(vote_id=vote_id["id"])
+def test_get_votes(user_client, vote_testdata):
+    get_votes_response = user_client.get_votes()
+    assert isinstance(get_votes_response, list), "Response must be a list"
+    assert len(get_votes_response) > 0, "Votes list should not be empty"
 
 def test_votes_schema(user_client):
-    response = user_client.get_votes()
-    assert response.status_code == 200
-
-    data = response.json()
-    for vote in data:
+    get_votes_response = user_client.get_votes()
+    for vote in get_votes_response:
         validate(instance=vote, schema=user_client.load_schema("get_votes_response.json"))
 
-def test_get_votes_by_id(user_client, vote_id):
-    response = user_client.get_votes_by_id(vote_id["id"])
-    assert response.status_code == 200, f"Unexpected status code: {response.status_code}"
-
-    data = response.json()
-    assert data["id"] == vote_id["id"], "Vote ID does not match"
+def test_get_votes_by_id(user_client, vote_testdata):
+    get_votes_by_id_response = user_client.get_votes_by_id(vote_testdata["id"])
+    assert get_votes_by_id_response["id"] == vote_testdata["id"], "Vote ID does not match"
 
 
 @pytest.mark.parametrize(
@@ -37,21 +26,22 @@ def test_get_votes_by_id(user_client, vote_id):
             (0, [400], "Invalid vote value 0"),
             (6, [400], "Invalid vote value 6"),
             (-1, [400], "Invalid negative vote value"),
+            (None, [400], "Invalid None vote value"),
+            (-5, [400], "Invalid vote value -5"),
             ("a", [400], "Invalid non-integer vote value"),
         ]
 )
-def test_post_vote(user_client, image_id, vote_value, expected_status, comment):
+def test_post_vote(user_client,  image_testdata, vote_value, expected_status):
     vote_data = {
-        "image_id": image_id["id"],
+        "image_id": image_testdata["id"],
         "value": vote_value
     }
-    response = user_client.post_vote(vote_data)
-    assert response.status_code in expected_status, f"Unexpected status code: {response.status_code}"
+    post_vote_response = user_client.post_vote(vote_data, raise_for_status=False)
+    assert post_vote_response.status_code in expected_status, f"Unexpected status code: {post_vote_response.status_code}"
 
-    data = response.json()
-    assert data["image_id"] == image_id["id"], "Image ID does not match"
-    assert data["value"] == vote_value, "Vote value does not match"
+    vote_json = post_vote_response.json()
+    assert vote_json["image_id"] == image_testdata["id"], "Image ID does not match"
+    assert vote_json["value"] == vote_value, "Vote value does not match"
 
-def test_delete_vote(user_client, vote_id):
-    response = user_client.delete_vote(vote_id["id"])
-    assert response.status_code == 200, f"Unexpected status code : {response.status_code}"
+def test_delete_vote(user_client, vote_testdata):
+    delete_vote_response = user_client.delete_vote(vote_testdata["id"])

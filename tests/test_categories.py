@@ -4,19 +4,15 @@ from jsonschema import validate
 
 
 def test_get_categories(user_client):
-    response = user_client.get_categories()
-    assert response.status_code == 200, f"Unexpected status code: {response.status_code}"
+    get_categories_response = user_client.get_categories()
 
-    data = response.json()
-    assert isinstance(data, list), "Response must be a list"
-    assert len(data) > 0, "Categories list should not be empty"
+    assert isinstance(get_categories_response, list), "Response must be a list"
+    assert len(get_categories_response) > 0, "Categories list should not be empty"
 
 
 
 def test_categories_schema(user_client):
-    response = user_client.get_categories()
-    assert response.status_code == 200
+    get_categories_response = user_client.get_categories()
 
-    data = response.json()
-    for category in data:
+    for category in get_categories_response:
         validate(instance=category, schema=user_client.load_schema("get_category_response.json"))
