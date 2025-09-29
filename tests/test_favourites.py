@@ -26,7 +26,6 @@ def test_get_favourites_by_id(user_client, favourite_id):
     data = response.json()
     assert data["id"] == favourite_id["id"], "Favourite ID does not match"
 
-    user_client.delete_favourites(favourite_id=data["id"])
 
 def test_post_favourite(user_client, image_id):
     favourite_data = {
@@ -36,11 +35,10 @@ def test_post_favourite(user_client, image_id):
     assert response.status_code in [200, 201], f"Unexpected status code: {response.status_code}"
 
     data = response.json()
-    user_client.delete_favourites(favourite_id=data["id"])
+    assert data["image_id"] == image_id["id"], "Image ID does not match"
 
 def test_delete_favourite(user_client, favourite_id):
     response = user_client.delete_favourites(favourite_id["id"])
     assert response.status_code == 200, f"Unexpected status code : {response.status_code}"
 
-    user_client.delete_favourites(favourite_id=favourite_id["id"])
 

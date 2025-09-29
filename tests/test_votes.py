@@ -29,8 +29,6 @@ def test_get_votes_by_id(user_client, vote_id):
     data = response.json()
     assert data["id"] == vote_id["id"], "Vote ID does not match"
 
-    user_client.delete_vote(vote_id=data["id"])
-
 
 @pytest.mark.parametrize(
         "vote_value, expected_status, comment",
@@ -54,10 +52,6 @@ def test_post_vote(user_client, image_id, vote_value, expected_status, comment):
     assert data["image_id"] == image_id["id"], "Image ID does not match"
     assert data["value"] == vote_value, "Vote value does not match"
 
-    user_client.delete_vote(vote_id=data["id"])
-
 def test_delete_vote(user_client, vote_id):
     response = user_client.delete_vote(vote_id["id"])
     assert response.status_code == 200, f"Unexpected status code : {response.status_code}"
-
-    user_client.delete_vote(vote_id=vote_id["id"])
