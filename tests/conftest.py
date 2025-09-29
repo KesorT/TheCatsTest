@@ -18,9 +18,6 @@ def image_testdata(user_client):
 
     yield get_image_response[0]
 
-    print(f"\nCleaning up image with ID: {get_image_response[0]['id']}")
-    user_client.delete_image(image_id=get_image_response[0]['id'])
-
 @pytest.fixture()
 def vote_testdata(user_client, image_testdata):
     vote_data = {

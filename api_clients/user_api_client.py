@@ -19,9 +19,9 @@ class UserApiClient(BaseApiClient):
     def get_votes_by_id(self, vote_id, **kwargs):
         return self._request("GET", f"votes/{vote_id}", **kwargs)
 
-    def post_vote(self, data):
-        return self._request("POST", "votes", json=data)
-    
+    def post_vote(self, data, **kwargs):
+        return self._request("POST", "votes", json=data, **kwargs)
+
     def delete_vote(self, vote_id):
         return self._request("DELETE", f"votes/{vote_id}")
 

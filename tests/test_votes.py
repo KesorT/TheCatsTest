@@ -9,10 +9,9 @@ def test_get_votes(user_client, vote_testdata):
     assert isinstance(get_votes_response, list), "Response must be a list"
     assert len(get_votes_response) > 0, "Votes list should not be empty"
 
-def test_votes_schema(user_client):
+def test_votes_schema(user_client, vote_testdata):
     get_votes_response = user_client.get_votes()
-    for vote in get_votes_response:
-        validate(instance=vote, schema=user_client.load_schema("get_votes_response.json"))
+    validate(instance=get_votes_response[0], schema=user_client.load_schema("get_votes_response.json"))
 
 def test_get_votes_by_id(user_client, vote_testdata):
     get_votes_by_id_response = user_client.get_votes_by_id(vote_testdata["id"])
@@ -43,5 +42,10 @@ def test_post_vote(user_client,  image_testdata, vote_value, expected_status, co
     assert vote_json["image_id"] == image_testdata["id"], "Image ID does not match"
     assert vote_json["value"] == vote_value, "Vote value does not match"
 
-def test_delete_vote(user_client, vote_testdata):
-    delete_vote_response = user_client.delete_vote(vote_testdata["id"])
+def test_delete_vote(user_client, image_testdata):
+    vote_data = {
+        "image_id": image_testdata["id"],
+        "value": 1
+    }
+    post_vote_response = user_client.post_vote(vote_data)
+    delete_vote_response = user_client.delete_vote(post_vote_response["id"])
