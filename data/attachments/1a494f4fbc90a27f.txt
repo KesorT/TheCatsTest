@@ -1,0 +1,4 @@
+
+Posting favourite with data: {'image_id': 'MjAzNTEwNA'}
+
+Cleaning up favourite with ID: 232550048
