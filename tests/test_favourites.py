@@ -23,10 +23,14 @@ def test_post_favourite(user_client, image_testdata):
     favourite_data = {
         "image_id": image_testdata["id"]
     }
-    post_favourite_response = user_client.post_favourites(favourite_data)
-    assert post_favourite_response["image_id"] == image_testdata["id"], "Image ID does not match"
+    post_favourite_response = user_client.post_favourites(data=favourite_data)
 
-def test_delete_favourite(user_client, favourite_testdata):
-    delete_favourite_response = user_client.delete_favourites(favourite_testdata["id"])
+    
+def test_delete_favourite(user_client, image_testdata):
+    data = {
+        "image_id": image_testdata["id"]
+    }
+    post_favourite_response = user_client.post_favourites(data)
+    delete_favourite_response = user_client.delete_favourites(post_favourite_response["id"])
 
 

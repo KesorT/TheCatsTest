@@ -36,11 +36,12 @@ def favourite_testdata(user_client, image_testdata):
     favourite_data = {
         "image_id": image_testdata["id"]
     }
-    post_favourite_response = user_client.post_favourites(favourite_data)
+    print(f"\nPosting favourite with data: {favourite_data}")
+    post_favourite_response = user_client.post_favourites(data=favourite_data)
 
     yield post_favourite_response
 
     print(f"\nCleaning up favourite with ID: {post_favourite_response['id']}")
-    user_client.delete_favourite(favourite_id=post_favourite_response['id'])
+    user_client.delete_favourites(favourite_id=post_favourite_response['id'])
 
 
