@@ -1,33 +1,28 @@
 import requests
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-BASE_URL = os.getenv("BASE_URL")
-API_KEY = os.getenv("API_KEY")
+from configs.api_config import DEFAULT_CONFIG
 
 class BaseApiClient:
-    def __init__(self):
-        self.base_url = BASE_URL
+    def __init__(self, config = DEFAULT_CONFIG):
+        self.base_url = config.base_url
         self.headers = {
-            "x-api-key": API_KEY,
+            "x-api-key": config.api_key,
             "Content-Type": "application/json"
         }
 
-    '''def get(self, endpoint, params=None):
-        url = f"{self.base_url}{endpoint}"
-        response = requests.get(url, headers=self.headers, params=params)
-        return response
+    # def get(self, endpoint, params=None):
+    #     url = f"{self.base_url}{endpoint}"
+    #     response = requests.get(url, headers=self.headers, params=params)
+    #     return response
 
-    def post(self, endpoint, data=None, files=None):
-        url = f"{self.base_url}{endpoint}"
-        response = requests.post(url, headers=self.headers, json=data, files=files)
-        return response
+    # def post(self, endpoint, data=None, files=None):
+    #     url = f"{self.base_url}{endpoint}"
+    #     response = requests.post(url, headers=self.headers, json=data, files=files)
+    #     return response
     
-    def delete(self, endpoint):
-        url = f"{self.base_url}{endpoint}"
-        response = requests.delete(url, headers=self.headers)
-        return response'''
+    # def delete(self, endpoint):
+    #     url = f"{self.base_url}{endpoint}"
+    #     response = requests.delete(url, headers=self.headers)
+    #     return response
 
 
     def _request(self, method, endpoint, raise_for_status=True, **kwargs):

@@ -21,14 +21,14 @@ def test_get_favourites_by_id(user_client, favourite_testdata):
 
 def test_post_favourite(user_client, image_testdata):
     favourite_data = {
-        "image_id": image_testdata["id"]
+        "image_id": image_testdata[0]["id"]
     }
     post_favourite_response = user_client.post_favourites(data=favourite_data)
 
     
 def test_delete_favourite(user_client, image_testdata):
     data = {
-        "image_id": image_testdata["id"]
+        "image_id": image_testdata[0]["id"]
     }
     post_favourite_response = user_client.post_favourites(data)
     delete_favourite_response = user_client.delete_favourites(post_favourite_response["id"])
